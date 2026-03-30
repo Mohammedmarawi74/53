@@ -16,7 +16,7 @@ export const INITIAL_SLIDES: Slide[] = [
 ];
 
 export const INITIAL_DESIGN: DesignConfig = {
-  primaryColor: '#10b981',
+  primaryColor: '#00FFE0',
   secondaryColor: '#064e3b',
   textColor: '#ffffff',
   accentColor: '#10b981',

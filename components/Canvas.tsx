@@ -1,5 +1,6 @@
 import React from 'react';
 import { Slide, DesignConfig } from '../types';
+import { DataBackground } from './DataBackground';
 
 interface CanvasProps {
   slide: Slide;
@@ -25,14 +26,41 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
         {/* Decorative Overlay */}
         <div className="slide-decorative-overlay" />
 
-        {/* Logo Section */}
-        {design.logoUrl && (
-          <div className="slide-logo-section">
-            <div className="slide-logo-image">
-              <img src={design.logoUrl} alt="Logo" />
+        {/* Data Background Effect */}
+        <DataBackground design={design} />
+
+        {/* New Header Section */}
+        <div className="poster-header" dir="rtl">
+          <div className="poster-header-right">
+            <div className="poster-logo-icon">
+              <img 
+                src="/logos/alinvestor white.svg" 
+                alt="Logo" 
+                className="poster-logo-image" 
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = design.logoUrl;
+                }}
+              />
+            </div>
+            <div className="poster-brand-container">
+              <span className="poster-brand-main" style={{ color: design.primaryColor }}>
+                منصة المستثمر
+              </span>
+              <span className="poster-brand-sub" style={{ color: design.textColor, opacity: 0.6 }}>
+                في رحلة لتطوير الاقتصاد العربي
+              </span>
             </div>
           </div>
-        )}
+
+          <div className="poster-header-left">
+            <div 
+              className="poster-investor-name" 
+              style={{ color: design.textColor, opacity: 0.8 }}
+            >
+              {slide.category || 'توعوي'}
+            </div>
+          </div>
+        </div>
 
         {/* Content Section */}
         <div className="slide-content">
@@ -61,20 +89,27 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
           </div>
         </div>
 
-        {/* Footer */}
+        {/* Modern Footer */}
         <div 
           className="slide-footer"
-          style={{
-            background: `linear-gradient(90deg, 
-              ${design.primaryColor}33 0%, 
-              ${design.primaryColor}99 50%, 
-              ${design.primaryColor}33 100%)`,
-            borderTop: `1px solid ${design.primaryColor}66`,
-            boxShadow: `0 -2px 15px ${design.primaryColor}33, 0 0 20px ${design.primaryColor}1a`
-          }}
+          style={{ borderTopColor: `${design.textColor}1a` }}
         >
-          <span className="slide-footer-right">منصة المستثمر الاقتصادية</span>
-          <span className="slide-footer-left">al-investor.com</span>
+          <div className="slide-footer-brand">
+            <span 
+              className="slide-footer-right" 
+              style={{ color: design.textColor }}
+            >
+              منصة المستثمر الاقتصادية
+            </span>
+            <div 
+              className="slide-footer-dot" 
+              style={{ backgroundColor: design.primaryColor }}
+            />
+          </div>
+
+          <div className="slide-footer-left" style={{ color: design.textColor }}>
+            al-investor.com
+          </div>
         </div>
 
         {/* Dynamic Accents */}
