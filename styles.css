@@ -659,12 +659,16 @@
 }
 
 .recommendation-text {
-  padding: 0.5rem 1.5rem;
+  padding: 0.625rem 1.25rem;
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(10, 10, 10, 0.85);
   font-size: 0.875rem;
-  backdrop-filter: blur(4px);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
 }
 
 /* Footer */
@@ -673,7 +677,7 @@
   bottom: 1.5rem;
   left: 0;
   right: 0;
-  height: 8px;
+  height: 24px;
   background: linear-gradient(90deg, 
     rgba(16, 185, 129, 0.2) 0%, 
     rgba(16, 185, 129, 0.6) 50%, 
@@ -683,9 +687,9 @@
   align-items: center;
   padding: 0;
   overflow: visible;
-  backdrop-filter: blur(4px);
   border-top: 1px solid rgba(16, 185, 129, 0.3);
   box-shadow: 0 -2px 15px rgba(16, 185, 129, 0.2), 0 0 20px rgba(16, 185, 129, 0.1);
+  z-index: 30;
 }
 
 .slide-footer-right {

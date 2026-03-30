@@ -28,7 +28,6 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
         {/* Logo Section */}
         {design.logoUrl && (
           <div className="slide-logo-section">
-            <span className="slide-logo-text">Radar Al-Mustathmir</span>
             <div className="slide-logo-image">
               <img src={design.logoUrl} alt="Logo" />
             </div>
@@ -74,8 +73,8 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
             boxShadow: `0 -2px 15px ${design.primaryColor}33, 0 0 20px ${design.primaryColor}1a`
           }}
         >
-          <span className="slide-footer-right">منصة المستثمر</span>
-          <span className="slide-footer-left">al_investor.com</span>
+          <span className="slide-footer-right">منصة المستثمر الاقتصادية</span>
+          <span className="slide-footer-left">al-investor.com</span>
         </div>
 
         {/* Dynamic Accents */}
