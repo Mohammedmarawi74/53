@@ -1,5 +1,5 @@
 body {
-  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-family: 'IBM Plex Sans Arabic', sans-serif !important;
   background-color: #0d0d0d;
   color: white;
   margin: 0;

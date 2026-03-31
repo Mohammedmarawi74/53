@@ -53,12 +53,21 @@ const App: React.FC = () => {
     if (!canvasRef.current || isExporting) return;
     setIsExporting(true);
     try {
-      if (document.fonts) await document.fonts.ready;
+      if (document.fonts) {
+        await document.fonts.load('1rem "IBM Plex Sans Arabic"');
+        await document.fonts.ready;
+      }
       // Brief delay to ensure font-face is fully processed
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 200));
+      
       const dataUrl = await htmlToImage.toPng(canvasRef.current, {
-        pixelRatio: 2,
+        pixelRatio: 4, // Maximum quality
         quality: 1,
+        cacheBust: true,
+        fontEmbedCSS: "@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap');",
+        style: {
+          fontFamily: "'IBM Plex Sans Arabic', sans-serif"
+        }
       });
       const link = document.createElement('a');
       link.download = `radar-investor-slide-${currentIndex + 1}.png`;

@@ -42,11 +42,11 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
                 }}
               />
             </div>
-            <div className="poster-brand-container">
-              <span className="poster-brand-main" style={{ color: design.primaryColor }}>
+            <div className="poster-brand-container" style={{ fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}>
+              <span className="poster-brand-main" style={{ color: design.primaryColor, fontWeight: 800 }}>
                 منصة المستثمر
               </span>
-              <span className="poster-brand-sub" style={{ color: design.textColor, opacity: 0.6 }}>
+              <span className="poster-brand-sub" style={{ color: design.textColor, opacity: 0.6, fontWeight: 500 }}>
                 في رحلة لتطوير الاقتصاد العربي
               </span>
             </div>
@@ -55,7 +55,7 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
           <div className="poster-header-left">
             <div 
               className="poster-investor-name" 
-              style={{ color: design.textColor, opacity: 0.8 }}
+              style={{ color: design.textColor, opacity: 0.8, fontFamily: "'IBM Plex Sans Arabic', sans-serif", fontWeight: 700 }}
             >
               {slide.category || 'توعوي'}
             </div>
@@ -75,7 +75,9 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
             style={{
               fontSize: `${design.fontSize}px`,
               color: design.textColor,
-              textShadow: '0 4px 12px rgba(0,0,0,0.5)'
+              textShadow: '0 4px 12px rgba(0,0,0,0.5)',
+              fontFamily: "'IBM Plex Sans Arabic', sans-serif",
+              fontWeight: 700
             }}
           >
             {slide.question}
@@ -83,7 +85,7 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
 
           <div
             className="recommendation-text"
-            style={{ color: design.primaryColor }}
+            style={{ color: design.primaryColor, fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}
           >
             {slide.recommendation}
           </div>
@@ -97,7 +99,7 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
           <div className="slide-footer-brand">
             <span 
               className="slide-footer-right" 
-              style={{ color: design.textColor }}
+              style={{ color: design.textColor, fontFamily: "'IBM Plex Sans Arabic', sans-serif", fontWeight: 700 }}
             >
               منصة المستثمر الاقتصادية
             </span>
@@ -107,7 +109,7 @@ const Canvas: React.FC<CanvasProps> = ({ slide, design, canvasRef }) => {
             />
           </div>
 
-          <div className="slide-footer-left" style={{ color: design.textColor }}>
+          <div className="slide-footer-left" style={{ color: design.textColor, fontFamily: "'IBM Plex Sans Arabic', sans-serif", fontWeight: 700 }}>
             al-investor.com
           </div>
         </div>
