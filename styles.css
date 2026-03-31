@@ -577,6 +577,7 @@
   transition: all 0.7s;
   user-select: none;
   background-color: #000;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
 }
 
 .slide-decorative-overlay {

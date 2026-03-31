@@ -53,6 +53,9 @@ const App: React.FC = () => {
     if (!canvasRef.current || isExporting) return;
     setIsExporting(true);
     try {
+      if (document.fonts) await document.fonts.ready;
+      // Brief delay to ensure font-face is fully processed
+      await new Promise(resolve => setTimeout(resolve, 100));
       const dataUrl = await htmlToImage.toPng(canvasRef.current, {
         pixelRatio: 2,
         quality: 1,
