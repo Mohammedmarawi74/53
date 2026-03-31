@@ -9,6 +9,36 @@ import './styles.css';
 // We assume html-to-image is loaded in index.html
 declare const htmlToImage: any;
 
+// Helper function to fetch fonts and convert them to Base64 for reliable image rendering
+const fetchAndInlineFonts = async (fontUrl: string) => {
+  try {
+    const response = await fetch(fontUrl);
+    const cssText = await response.text();
+    const fontUrls = cssText.match(/url\((.*?)\)/g)?.map(u => u.replace(/url\(['"]?(.*?)['"]?\)/, '$1')) || [];
+    let inlinedCss = cssText;
+
+    for (const url of fontUrls) {
+      if (url.startsWith('data:')) continue;
+      try {
+        const fontResponse = await fetch(url.trim());
+        const blob = await fontResponse.blob();
+        const base64 = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(blob);
+        });
+        inlinedCss = inlinedCss.split(url).join(base64);
+      } catch (e) {
+        console.warn(`Could not inline font at ${url}`, e);
+      }
+    }
+    return inlinedCss;
+  } catch (e) {
+    console.error("Critical error inlining fonts", e);
+    return "";
+  }
+};
+
 const App: React.FC = () => {
   const [slides, setSlides] = useState<Slide[]>(INITIAL_SLIDES);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -65,19 +95,18 @@ const App: React.FC = () => {
         return new Promise(resolve => { image.onload = resolve; image.onerror = resolve; });
       }));
 
-      // Extra delay for stability
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // Extreme font inlining
+      const googleFontUrl = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&subset=arabic&display=block';
+      const embeddedFontCss = await fetchAndInlineFonts(googleFontUrl);
 
-      // Fetch the font CSS content manually to overcome CORS and font embedding issues
-      const fontResponse = await fetch('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&subset=arabic&display=block');
-      const fontCssContent = await fontResponse.text();
+      await new Promise(resolve => setTimeout(resolve, 800));
 
       const dataUrl = await htmlToImage.toPng(canvasRef.current, {
         pixelRatio: 4,
         quality: 1,
         cacheBust: true,
         includeQueryParams: true,
-        fontEmbedCSS: fontCssContent,
+        fontEmbedCSS: embeddedFontCss,
         style: {
           fontFamily: "'IBM Plex Sans Arabic', sans-serif"
         }
