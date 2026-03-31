@@ -57,20 +57,34 @@ const App: React.FC = () => {
         await document.fonts.load('1rem "IBM Plex Sans Arabic"');
         await document.fonts.ready;
       }
-      // Brief delay to ensure font-face is fully processed
-      await new Promise(resolve => setTimeout(resolve, 200));
       
+      const images = canvasRef.current.querySelectorAll('img');
+      await Promise.all(Array.from(images).map(img => {
+        const image = img as HTMLImageElement;
+        if (image.complete) return Promise.resolve();
+        return new Promise(resolve => { image.onload = resolve; image.onerror = resolve; });
+      }));
+
+      // Extra delay for stability
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      // Fetch the font CSS content manually to overcome CORS and font embedding issues
+      const fontResponse = await fetch('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&subset=arabic&display=block');
+      const fontCssContent = await fontResponse.text();
+
       const dataUrl = await htmlToImage.toPng(canvasRef.current, {
-        pixelRatio: 4, // Maximum quality
+        pixelRatio: 4,
         quality: 1,
         cacheBust: true,
-        fontEmbedCSS: "@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700;800&display=swap');",
+        includeQueryParams: true,
+        fontEmbedCSS: fontCssContent,
         style: {
           fontFamily: "'IBM Plex Sans Arabic', sans-serif"
         }
       });
+
       const link = document.createElement('a');
-      link.download = `radar-investor-slide-${currentIndex + 1}.png`;
+      link.download = `radar-investor-${Date.now()}.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {
